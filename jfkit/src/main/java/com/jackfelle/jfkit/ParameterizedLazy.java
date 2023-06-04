@@ -39,7 +39,7 @@ public class ParameterizedLazy <T, P>
 	// region Properties (Accessors)
 	
 	public @NonNull T get(@NonNull P param) {
-		return this.implementation.getValue(param);
+		return this.implementation.get(param);
 	}
 	
 	// endregion
@@ -55,7 +55,6 @@ public class ParameterizedLazy <T, P>
 	}
 	
 	private ParameterizedLazy(@NonNull Implementation<T, P> implementation) {
-		super();
 		this.implementation = implementation;
 	}
 	
@@ -79,17 +78,17 @@ public class ParameterizedLazy <T, P>
 		// region Properties
 		
 		private final @NonNull Builder<T, P> builder;
-		protected @Nullable T value;
+		protected @Nullable T object;
 		
 		// endregion
 		////////////////////////////////////////////////////////////////////////////////////////////
 		// region Properties (Accessors)
 		
-		public @NonNull T getValue(@NonNull P param) {
-			T retObj = this.value;
+		public @NonNull T get(@NonNull P param) {
+			T retObj = this.object;
 			if(retObj == null) {
 				retObj = this.builder.build(param);
-				this.value = retObj;
+				this.object = retObj;
 			}
 			return retObj;
 		}
@@ -99,7 +98,6 @@ public class ParameterizedLazy <T, P>
 		// region Lifecycle
 		
 		public Implementation(@NonNull Builder<T, P> builder) {
-			super();
 			this.builder = builder;
 		}
 		
@@ -112,14 +110,9 @@ public class ParameterizedLazy <T, P>
 		////////////////////////////////////////////////////////////////////////////////////////////
 		// region Properties (Accessors)
 		
-		@Override public @NonNull T getValue(@NonNull P param) {
-			T retObj = this.value;
-			if(retObj != null) {
-				return retObj;
-			}
-			
+		@Override public @NonNull T get(@NonNull P param) {
 			synchronized(this) {
-				return super.getValue(param);
+				return super.get(param);
 			}
 		}
 		
