@@ -39,7 +39,7 @@ public class Lazy <T>
 	// region Properties (Accessors)
 	
 	public @NonNull T get() {
-		return this.implementation.getValue();
+		return this.implementation.get();
 	}
 	
 	// endregion
@@ -55,7 +55,6 @@ public class Lazy <T>
 	}
 	
 	private Lazy(@NonNull Implementation<T> implementation) {
-		super();
 		this.implementation = implementation;
 	}
 	
@@ -79,21 +78,17 @@ public class Lazy <T>
 		// region Properties
 		
 		private final @NonNull Builder<T> builder;
-		protected @Nullable T value;
+		protected @Nullable T object;
 		
 		// endregion
 		////////////////////////////////////////////////////////////////////////////////////////////
 		// region Properties (Accessors)
 		
-		protected @NonNull Builder<T> getBuilder() {
-			return this.builder;
-		}
-		
-		public @NonNull T getValue() {
-			T retObj = this.value;
+		public @NonNull T get() {
+			T retObj = this.object;
 			if(retObj == null) {
-				retObj = this.getBuilder().build();
-				this.value = retObj;
+				retObj = this.builder.build();
+				this.object = retObj;
 			}
 			return retObj;
 		}
@@ -103,7 +98,6 @@ public class Lazy <T>
 		// region Lifecycle
 		
 		public Implementation(@NonNull Builder<T> builder) {
-			super();
 			this.builder = builder;
 		}
 		
@@ -116,14 +110,9 @@ public class Lazy <T>
 		////////////////////////////////////////////////////////////////////////////////////////////
 		// region Properties (Accessors)
 		
-		@Override public @NonNull T getValue() {
-			T retObj = this.value;
-			if(retObj != null) {
-				return retObj;
-			}
-			
+		@Override public @NonNull T get() {
 			synchronized(this) {
-				return super.getValue();
+				return super.get();
 			}
 		}
 		
