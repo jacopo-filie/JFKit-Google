@@ -27,7 +27,7 @@ package com.jackfelle.jfkit;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class Lazy <T>
+public final class Lazy <T>
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// region Properties
