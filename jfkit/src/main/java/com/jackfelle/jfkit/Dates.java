@@ -113,7 +113,7 @@ public abstract class Dates
 	
 	// endregion
 	////////////////////////////////////////////////////////////////////////////////////////////////
-	// region Methods - Strings
+	// region Methods - Texts
 	
 	public static @NonNull String newStringFromDate(@NonNull Date date, @NonNull DateFormat dateFormat) {
 		synchronized(Objects.requireNonNull(dateFormat)) {
