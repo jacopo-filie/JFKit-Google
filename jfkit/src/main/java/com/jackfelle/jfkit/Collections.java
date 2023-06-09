@@ -26,7 +26,9 @@ package com.jackfelle.jfkit;
 
 import android.os.Build;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,25 @@ public abstract class Collections
 	
 	public static <T> boolean isNullOrEmpty(@Nullable T[] array) {
 		return (array == null) || (array.length == 0);
+	}
+	
+	// endregion
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// region Methods - Enumerations
+	
+	public static @NonNull <T extends Enum<T>> EnumSet<T> newEnumSet(@Nullable T[] array, @NonNull Class<T> enumClass) {
+		return ((array == null) || (array.length == 0)) ? EnumSet.noneOf(enumClass) : EnumSet.copyOf(Arrays.asList(array));
+	}
+	
+	public static @Nullable <T extends Enum<T>, F> T seekEnumValue(@Nullable T[] values, @NonNull Filter<T> filter) {
+		if(values != null) {
+			for(T value : values) {
+				if(filter.isValid(value)) {
+					return value;
+				}
+			}
+		}
+		return null;
 	}
 	
 	// endregion
