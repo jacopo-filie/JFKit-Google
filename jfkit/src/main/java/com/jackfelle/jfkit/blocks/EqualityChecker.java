@@ -22,21 +22,12 @@
 //	SOFTWARE.
 //
 
-package com.jackfelle.jfkit;
+package com.jackfelle.jfkit.blocks;
 
 import androidx.annotation.NonNull;
 
-public abstract class Blocks
+@FunctionalInterface
+public interface EqualityChecker <T>
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	// region Interfaces
-	
-	@FunctionalInterface
-	public interface EqualityChecker <T>
-	{
-		boolean areEqual(@NonNull T first, @NonNull T second);
-	}
-	
-	// endregion
-	////////////////////////////////////////////////////////////////////////////////////////////////
+	boolean areEqual(@NonNull T first, @NonNull T second);
 }

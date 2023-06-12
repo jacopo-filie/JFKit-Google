@@ -26,6 +26,8 @@ package com.jackfelle.jfkit;
 
 import android.os.Build;
 
+import com.jackfelle.jfkit.blocks.EqualityChecker;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -46,7 +48,7 @@ public abstract class Collections
 		return Collections.contains(array, value, Object::equals);
 	}
 	
-	public static <T> boolean contains(@Nullable T[] array, @Nullable T value, @NonNull Blocks.EqualityChecker<T> checker) {
+	public static <T> boolean contains(@Nullable T[] array, @Nullable T value, @NonNull EqualityChecker<T> checker) {
 		if((array != null) && (value != null)) {
 			for(T item : array) {
 				if(checker.areEqual(item, value)) {
