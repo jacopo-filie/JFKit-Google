@@ -46,6 +46,23 @@ import androidx.annotation.Nullable;
 public abstract class Parcels
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////
+	// region Methods - Copying
+	
+	public static @NonNull <T extends Parcelable, R extends T> R copy(@NonNull T object, @NonNull Parcelable.Creator<R> creator) {
+		Parcel parcel = Parcel.obtain();
+		object.writeToParcel(parcel, 0);
+		parcel.setDataPosition(0);
+		R retObj = creator.createFromParcel(parcel);
+		parcel.recycle();
+		return retObj;
+	}
+	
+	public static @Nullable <T extends Parcelable, R extends T> R tryToCopy(@Nullable T object, @NonNull Parcelable.Creator<R> creator) {
+		return (object == null) ? null : Parcels.copy(object, creator);
+	}
+	
+	// endregion
+	////////////////////////////////////////////////////////////////////////////////////////////////
 	// region Methods - Readers
 	
 	public static boolean readBoolean(@NonNull Parcel parcel) {
