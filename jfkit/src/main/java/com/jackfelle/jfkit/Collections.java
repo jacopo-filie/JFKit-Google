@@ -59,6 +59,17 @@ public abstract class Collections
 		return false;
 	}
 	
+	public static @Nullable <T> T findItem(@Nullable T[] array, @NonNull Filter<T> filter) {
+		if(array != null) {
+			for(T item : array) {
+				if(filter.isValid(item)) {
+					return item;
+				}
+			}
+		}
+		return null;
+	}
+	
 	public static @Nullable <T> T getFirstItem(@Nullable T[] array) {
 		return ((array != null) && (array.length > 0)) ? array[0] : null;
 	}
@@ -78,17 +89,6 @@ public abstract class Collections
 	
 	public static @NonNull <T extends Enum<T>> EnumSet<T> newEnumSet(@Nullable T[] array, @NonNull Class<T> enumClass) {
 		return ((array == null) || (array.length == 0)) ? EnumSet.noneOf(enumClass) : EnumSet.copyOf(Arrays.asList(array));
-	}
-	
-	public static @Nullable <T extends Enum<T>, F> T seekEnumValue(@Nullable T[] values, @NonNull Filter<T> filter) {
-		if(values != null) {
-			for(T value : values) {
-				if(filter.isValid(value)) {
-					return value;
-				}
-			}
-		}
-		return null;
 	}
 	
 	// endregion
