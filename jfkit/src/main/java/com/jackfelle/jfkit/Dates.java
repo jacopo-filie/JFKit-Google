@@ -24,6 +24,8 @@
 
 package com.jackfelle.jfkit;
 
+import android.text.format.DateUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -127,6 +129,34 @@ public abstract class Dates
 	
 	public static @NonNull Date earlierDate(@NonNull Date date1, @NonNull Date date2) {
 		return (date1.before(date2) ? date1 : date2);
+	}
+	
+	public static boolean isSameDate(@NonNull Calendar calendar1, @NonNull Calendar calendar2) {
+		return (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA)) && (calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)) && (calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR));
+	}
+	
+	public static boolean isSameDate(@NonNull Date date1, @NonNull Date date2) {
+		return Dates.isSameDate(date1, date2, Calendar.getInstance(), Calendar.getInstance());
+	}
+	
+	public static boolean isSameDate(@NonNull Date date1, @NonNull Date date2, @NonNull Calendar calendar1, @NonNull Calendar calendar2) {
+		calendar1.setTime(date1);
+		calendar2.setTime(date2);
+		return Dates.isSameDate(calendar1, calendar2);
+	}
+	
+	public static boolean isToday(@NonNull Date date) {
+		return DateUtils.isToday(date.getTime());
+	}
+	
+	public static boolean isYesterday(@NonNull Date date) {
+		Calendar dateCalendar = Calendar.getInstance();
+		dateCalendar.setTime(date);
+		
+		Calendar yesterdayCalendar = Calendar.getInstance();
+		yesterdayCalendar.add(Calendar.DATE, -1);
+		
+		return (dateCalendar.get(Calendar.ERA) == yesterdayCalendar.get(Calendar.ERA)) && (dateCalendar.get(Calendar.YEAR) == yesterdayCalendar.get(Calendar.YEAR)) && (dateCalendar.get(Calendar.DAY_OF_YEAR) == yesterdayCalendar.get(Calendar.DAY_OF_YEAR));
 	}
 	
 	public static @NonNull Date laterDate(@NonNull Date date1, @NonNull Date date2) {
