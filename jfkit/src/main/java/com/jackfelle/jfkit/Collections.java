@@ -95,6 +95,17 @@ public abstract class Collections
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// region Methods - Lists
 	
+	public static @Nullable <T> T findItem(@Nullable List<T> list, @NonNull Filter<T> filter) {
+		if(list != null) {
+			for(T item : list) {
+				if(filter.isValid(item)) {
+					return item;
+				}
+			}
+		}
+		return null;
+	}
+	
 	public static @Nullable <T> T getFirstItem(@Nullable List<T> list) {
 		return ((list != null) && (list.size() > 0)) ? list.get(0) : null;
 	}
