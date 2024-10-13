@@ -118,7 +118,7 @@ public abstract class Dates
 	// region Methods - Texts
 	
 	public static @NonNull String newStringFromDate(@NonNull Date date, @NonNull DateFormat dateFormat) {
-		synchronized(Objects.requireNonNull(dateFormat)) {
+		synchronized(dateFormat) {
 			return dateFormat.format(date);
 		}
 	}
