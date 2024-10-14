@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/content_view"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#CC000000"
+	tools:ignore="Overdraw">
+	
+	<androidx.cardview.widget.CardView
+		android:id="@+id/alert_view"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:layout_margin="16dp"
+		app:cardBackgroundColor="#CC000000"
+		app:cardCornerRadius="8dp">
+		
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingHorizontal="16dp"
+			android:paddingVertical="12dp">
+			
+			<ProgressBar
+				android:id="@+id/spinner_view"
+				android:layout_width="32dp"
+				android:layout_height="32dp"
+				android:layout_gravity="center_horizontal"
+				android:layout_marginBottom="8dp"
+				android:indeterminateTint="#FFFFFF"
+				tools:targetApi="lollipop" />
+			
+			<TextView
+				android:id="@+id/text_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:text="This is a placeholder message."
+				android:textColor="#FFFFFF" />
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+</RelativeLayout>
