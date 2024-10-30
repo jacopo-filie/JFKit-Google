@@ -335,17 +335,11 @@ public final class Utilities
 	}
 	
 	public static int hashCode(@Nullable Object object) {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			return Objects.hashCode(object);
-		}
-		return ((object == null) ? 0 : object.hashCode());
+		return Objects.hashCode(object);
 	}
 	
 	public static int hashCode(@NonNull Object... objects) {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			return Objects.hash(objects);
-		}
-		return Arrays.hashCode(objects);
+		return Objects.hash(objects);
 	}
 	
 	// endregion

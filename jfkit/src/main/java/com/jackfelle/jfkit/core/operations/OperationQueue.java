@@ -244,17 +244,17 @@ public class OperationQueue implements Operation.Observer
 	}
 	
 	public static @NonNull OperationQueue getBackgroundQueue() {
-		return BACKGROUND_QUEUE.get();
+		return OperationQueue.BACKGROUND_QUEUE.get();
 	}
 	
 	public static @Nullable OperationQueue getCurrentQueue() {
-		synchronized(WORKER_QUEUES) {
-			return WORKER_QUEUES.get(Thread.currentThread());
+		synchronized(OperationQueue.WORKER_QUEUES) {
+			return OperationQueue.WORKER_QUEUES.get(Thread.currentThread());
 		}
 	}
 	
 	public static @NonNull OperationQueue getMainQueue() {
-		return MAIN_QUEUE.get();
+		return OperationQueue.MAIN_QUEUE.get();
 	}
 	
 	public static @NonNull OperationQueue newConcurrentQueue(@Nullable String name) {
@@ -360,21 +360,20 @@ public class OperationQueue implements Operation.Observer
 		}
 		
 		Thread thread = Thread.currentThread();
-		synchronized(WORKER_QUEUES) {
-			WORKER_QUEUES.put(thread, this);
+		synchronized(OperationQueue.WORKER_QUEUES) {
+			OperationQueue.WORKER_QUEUES.put(thread, this);
 		}
 		
 		if(this.isMainQueue()) {
-			Operation finalOperation = operation;
-			this.getMainHandler().post(finalOperation::start);
+			this.getMainHandler().post(operation::start);
 		} else {
 			operation.start();
 		}
 		
 		operation.waitUntilFinished();
 		
-		synchronized(WORKER_QUEUES) {
-			WORKER_QUEUES.remove(thread);
+		synchronized(OperationQueue.WORKER_QUEUES) {
+			OperationQueue.WORKER_QUEUES.remove(thread);
 		}
 		
 		return true;
@@ -407,7 +406,7 @@ public class OperationQueue implements Operation.Observer
 	}
 	
 	public void addOperations(@NonNull List<Operation> operations, boolean waitUntilFinished) {
-		if(operations.size() == 0) {
+		if(operations.isEmpty()) {
 			return;
 		}
 		
@@ -424,7 +423,7 @@ public class OperationQueue implements Operation.Observer
 		}
 		if(invalidOperations != null) {
 			operations.removeAll(invalidOperations);
-			if(operations.size() == 0) {
+			if(operations.isEmpty()) {
 				return;
 			}
 		}

@@ -114,9 +114,6 @@ public abstract class Images
 		}
 		
 		Bitmap retObj = Bitmap.createScaledBitmap(source, (int)width, (int)height, false);
-		if(retObj == null) {
-			return source;
-		}
 		
 		if(shouldRecycleSourceOnSuccess && (retObj != source)) {
 			source.recycle();
@@ -138,9 +135,6 @@ public abstract class Images
 		matrix.preRotate(rotation);
 		
 		Bitmap retObj = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, false);
-		if(retObj == null) {
-			return source;
-		}
 		
 		if(shouldRecycleSourceOnSuccess && (retObj != source)) {
 			source.recycle();

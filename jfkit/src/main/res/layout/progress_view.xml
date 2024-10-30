@@ -30,8 +30,7 @@
 				android:layout_height="32dp"
 				android:layout_gravity="center_horizontal"
 				android:layout_marginBottom="8dp"
-				android:indeterminateTint="#FFFFFF"
-				tools:targetApi="lollipop" />
+				android:indeterminateTint="#FFFFFF" />
 			
 			<TextView
 				android:id="@+id/text_label"
@@ -39,7 +38,8 @@
 				android:layout_height="wrap_content"
 				android:gravity="center_horizontal"
 				android:text="This is a placeholder message."
-				android:textColor="#FFFFFF" />
+				android:textColor="#FFFFFF"
+				tools:ignore="HardcodedText" />
 		</LinearLayout>
 	</androidx.cardview.widget.CardView>
 </RelativeLayout>

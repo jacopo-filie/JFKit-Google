@@ -46,11 +46,11 @@ public class SwitchMachine extends StateMachine
 	// region Properties (Accessors) - State
 	
 	public boolean isClosed() {
-		return (this.getCurrentState() == STATE_CLOSED);
+		return (this.getCurrentState() == SwitchMachine.STATE_CLOSED);
 	}
 	
 	public boolean isOpen() {
-		return (this.getCurrentState() == STATE_OPEN);
+		return (this.getCurrentState() == SwitchMachine.STATE_OPEN);
 	}
 	
 	// endregion
@@ -58,11 +58,11 @@ public class SwitchMachine extends StateMachine
 	// region Properties (Accessors) - Transitions
 	
 	public boolean isClosing() {
-		return (this.getCurrentTransition() == TRANSITION_CLOSING);
+		return (this.getCurrentTransition() == SwitchMachine.TRANSITION_CLOSING);
 	}
 	
 	public boolean isOpening() {
-		return (this.getCurrentTransition() == TRANSITION_OPENING);
+		return (this.getCurrentTransition() == SwitchMachine.TRANSITION_OPENING);
 	}
 	
 	// endregion
@@ -70,7 +70,7 @@ public class SwitchMachine extends StateMachine
 	// region Memory management
 	
 	public SwitchMachine(@NonNull Delegate delegate) {
-		super(STATE_CLOSED, delegate);
+		super(SwitchMachine.STATE_CLOSED, delegate);
 	}
 	
 	// endregion
@@ -86,15 +86,15 @@ public class SwitchMachine extends StateMachine
 	}
 	
 	public void close(Object context, Blocks.SimpleCompletionBlock completion) {
-		this.performTransition(TRANSITION_CLOSING, context, completion);
+		this.performTransition(SwitchMachine.TRANSITION_CLOSING, context, completion);
 	}
 	
 	@Override public int getFinalStateForFailedTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CLOSING:
-				return STATE_OPEN;
-			case TRANSITION_OPENING:
-				return STATE_CLOSED;
+			case SwitchMachine.TRANSITION_CLOSING:
+				return SwitchMachine.STATE_OPEN;
+			case SwitchMachine.TRANSITION_OPENING:
+				return SwitchMachine.STATE_CLOSED;
 			default:
 				return super.getFinalStateForFailedTransition(transition);
 		}
@@ -102,10 +102,10 @@ public class SwitchMachine extends StateMachine
 	
 	@Override public int getFinalStateForSucceededTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CLOSING:
-				return STATE_CLOSED;
-			case TRANSITION_OPENING:
-				return STATE_OPEN;
+			case SwitchMachine.TRANSITION_CLOSING:
+				return SwitchMachine.STATE_CLOSED;
+			case SwitchMachine.TRANSITION_OPENING:
+				return SwitchMachine.STATE_OPEN;
 			default:
 				return super.getFinalStateForSucceededTransition(transition);
 		}
@@ -113,10 +113,10 @@ public class SwitchMachine extends StateMachine
 	
 	@Override public int getInitialStateForTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CLOSING:
-				return STATE_OPEN;
-			case TRANSITION_OPENING:
-				return STATE_CLOSED;
+			case SwitchMachine.TRANSITION_CLOSING:
+				return SwitchMachine.STATE_OPEN;
+			case SwitchMachine.TRANSITION_OPENING:
+				return SwitchMachine.STATE_CLOSED;
 			default:
 				return super.getInitialStateForTransition(transition);
 		}
@@ -131,7 +131,7 @@ public class SwitchMachine extends StateMachine
 	}
 	
 	public void open(Object context, Blocks.SimpleCompletionBlock completion) {
-		this.performTransition(TRANSITION_OPENING, context, completion);
+		this.performTransition(SwitchMachine.TRANSITION_OPENING, context, completion);
 	}
 	
 	// endregion
@@ -140,9 +140,9 @@ public class SwitchMachine extends StateMachine
 	
 	@Override public String getDebugStringForState(int state) {
 		switch(state) {
-			case STATE_CLOSED:
+			case SwitchMachine.STATE_CLOSED:
 				return "Closed";
-			case STATE_OPEN:
+			case SwitchMachine.STATE_OPEN:
 				return "Open";
 			default:
 				return super.getDebugStringForState(state);
@@ -151,9 +151,9 @@ public class SwitchMachine extends StateMachine
 	
 	@Override public String getDebugStringForTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CLOSING:
+			case SwitchMachine.TRANSITION_CLOSING:
 				return "Closing";
-			case TRANSITION_OPENING:
+			case SwitchMachine.TRANSITION_OPENING:
 				return "Opening";
 			default:
 				return super.getDebugStringForTransition(transition);

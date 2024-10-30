@@ -85,11 +85,11 @@ public class Error extends Throwable
 	// region Properties (Accessors) - Data (Localized)
 	
 	public String getLocalizedFailureReason() {
-		return this.getUserInfoStringForKey(LOCALIZED_FAILURE_REASON_KEY);
+		return this.getUserInfoStringForKey(Error.LOCALIZED_FAILURE_REASON_KEY);
 	}
 	
 	@Override public String getLocalizedMessage() {
-		String retObj = this.getUserInfoStringForKey(LOCALIZED_MESSAGE_KEY);
+		String retObj = this.getUserInfoStringForKey(Error.LOCALIZED_MESSAGE_KEY);
 		if(retObj == null) {
 			retObj = super.getLocalizedMessage();
 		}
@@ -97,7 +97,7 @@ public class Error extends Throwable
 	}
 	
 	public String getLocalizedRecoverySuggestion() {
-		return this.getUserInfoStringForKey(LOCALIZED_RECOVERY_SUGGESTION_KEY);
+		return this.getUserInfoStringForKey(Error.LOCALIZED_RECOVERY_SUGGESTION_KEY);
 	}
 	
 	// endregion
@@ -119,7 +119,7 @@ public class Error extends Throwable
 		String localizedMessage = throwable.getLocalizedMessage();
 		if((localizedMessage != null) && !localizedMessage.equals(message)) {
 			userInfo = new HashMap<>(1);
-			userInfo.put(LOCALIZED_MESSAGE_KEY, localizedMessage);
+			userInfo.put(Error.LOCALIZED_MESSAGE_KEY, localizedMessage);
 		}
 		
 		Error retObj = new Error(domain, code, message, userInfo);
@@ -141,7 +141,7 @@ public class Error extends Throwable
 		Map<String, Object> userInfo = null;
 		if(underlyingError != null) {
 			userInfo = new HashMap<>(1);
-			userInfo.put(UNDERLYING_ERROR_KEY, underlyingError);
+			userInfo.put(Error.UNDERLYING_ERROR_KEY, underlyingError);
 		}
 		
 		this.code = code;
@@ -150,7 +150,7 @@ public class Error extends Throwable
 	}
 	
 	public Error(@NonNull String domain, int code, String message, Map<String, Object> userInfo) {
-		super(message, ((userInfo == null) ? null : (Throwable)userInfo.get(UNDERLYING_ERROR_KEY)));
+		super(message, ((userInfo == null) ? null : (Throwable)userInfo.get(Error.UNDERLYING_ERROR_KEY)));
 		
 		if(userInfo != null) {
 			userInfo = new HashMap<>(userInfo);

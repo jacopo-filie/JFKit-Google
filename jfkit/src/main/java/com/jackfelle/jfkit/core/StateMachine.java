@@ -101,7 +101,7 @@ public class StateMachine
 		String queueName = this.getClass().getSimpleName();
 		
 		this.currentState = state;
-		this.currentTransition = TRANSITION_NONE;
+		this.currentTransition = StateMachine.TRANSITION_NONE;
 		this.delegate = new WeakReference<>(delegate);
 		this.notificationQueue = OperationQueue.newSerialQueue(queueName + ".notifications");
 		this.transitionQueue = OperationQueue.newSerialQueue(queueName + ".transitions");
@@ -124,15 +124,15 @@ public class StateMachine
 	// region Methods - States
 	
 	public int getFinalStateForFailedTransition(int transition) {
-		return STATE_NOT_AVAILABLE;
+		return StateMachine.STATE_NOT_AVAILABLE;
 	}
 	
 	public int getFinalStateForSucceededTransition(int transition) {
-		return STATE_NOT_AVAILABLE;
+		return StateMachine.STATE_NOT_AVAILABLE;
 	}
 	
 	public int getInitialStateForTransition(int transition) {
-		return STATE_NOT_AVAILABLE;
+		return StateMachine.STATE_NOT_AVAILABLE;
 	}
 	
 	// endregion
@@ -144,7 +144,7 @@ public class StateMachine
 		
 		int finalState = (succeeded ? this.getFinalStateForSucceededTransition(transition) : this.getFinalStateForFailedTransition(transition));
 		
-		this.setCurrentStateAndTransition(finalState, TRANSITION_NONE);
+		this.setCurrentStateAndTransition(finalState, StateMachine.TRANSITION_NONE);
 		
 		Delegate delegate = this.getDelegate();
 		this.executeOnNotificationQueue(() -> {
@@ -159,23 +159,23 @@ public class StateMachine
 	}
 	
 	private @Nullable Error isValidTransition(int transition) {
-		if((transition == TRANSITION_NONE) || (transition == TRANSITION_NOT_AVAILABLE)) {
-			return new Error("", ERROR_INVALID_TRANSITION, null);
+		if((transition == StateMachine.TRANSITION_NONE) || (transition == StateMachine.TRANSITION_NOT_AVAILABLE)) {
+			return new Error("", StateMachine.ERROR_INVALID_TRANSITION, null);
 		}
 		
 		int state = this.getInitialStateForTransition(transition);
-		if(state == STATE_NOT_AVAILABLE) {
-			return new Error("", ERROR_INVALID_INITIAL_STATE);
+		if(state == StateMachine.STATE_NOT_AVAILABLE) {
+			return new Error("", StateMachine.ERROR_INVALID_INITIAL_STATE);
 		}
 		
 		state = this.getFinalStateForSucceededTransition(transition);
-		if(state == STATE_NOT_AVAILABLE) {
-			return new Error("", ERROR_INVALID_FINAL_STATE_ON_SUCCESS);
+		if(state == StateMachine.STATE_NOT_AVAILABLE) {
+			return new Error("", StateMachine.ERROR_INVALID_FINAL_STATE_ON_SUCCESS);
 		}
 		
 		state = this.getFinalStateForFailedTransition(transition);
-		if(state == STATE_NOT_AVAILABLE) {
-			return new Error("", ERROR_INVALID_FINAL_STATE_ON_FAILURE);
+		if(state == StateMachine.STATE_NOT_AVAILABLE) {
+			return new Error("", StateMachine.ERROR_INVALID_FINAL_STATE_ON_FAILURE);
 		}
 		
 		return null;
@@ -200,7 +200,7 @@ public class StateMachine
 		
 		this.getTransitionQueue().addOperation(() -> {
 			if(this.getInitialStateForTransition(transition) != this.getCurrentState()) {
-				errorBlock.execute(new Error("", ERROR_WRONG_INITIAL_STATE));
+				errorBlock.execute(new Error("", StateMachine.ERROR_WRONG_INITIAL_STATE));
 			} else {
 				this.performTransitionOnQueue(transition, context, completion);
 			}
@@ -227,14 +227,14 @@ public class StateMachine
 	// region Methods - Utilities
 	
 	public @Nullable String getDebugStringForState(int state) {
-		return ((state == STATE_NOT_AVAILABLE) ? "NotAvailable" : null);
+		return ((state == StateMachine.STATE_NOT_AVAILABLE) ? "NotAvailable" : null);
 	}
 	
 	public @Nullable String getDebugStringForTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_NONE:
+			case StateMachine.TRANSITION_NONE:
 				return "None";
-			case TRANSITION_NOT_AVAILABLE:
+			case StateMachine.TRANSITION_NOT_AVAILABLE:
 				return "NotAvailable";
 			default:
 				return null;

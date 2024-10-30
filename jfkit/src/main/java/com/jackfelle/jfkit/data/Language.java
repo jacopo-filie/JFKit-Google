@@ -63,15 +63,13 @@ public class Language
 	}
 	
 	@Override public boolean equals(@Nullable Object object) {
-		if(!(object instanceof Language)) {
+		if(!(object instanceof Language other)) {
 			return false;
 		}
 		
 		if(object == this) {
 			return true;
 		}
-		
-		Language other = (Language)object;
 		
 		if(!Utilities.areObjectsEqual(this.getCode(), other.getCode())) {
 			return false;

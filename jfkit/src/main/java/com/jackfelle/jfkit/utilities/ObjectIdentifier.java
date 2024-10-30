@@ -42,7 +42,7 @@ public final class ObjectIdentifier
 		Long retVal = null;
 		
 		List<WeakReference<Object>> oldReferences = null;
-		for(WeakReference<Object> reference : REGISTRY.keySet()) {
+		for(WeakReference<Object> reference : ObjectIdentifier.REGISTRY.keySet()) {
 			Object storedObject = reference.get();
 			if(storedObject == null) {
 				if(oldReferences == null) {
@@ -53,20 +53,20 @@ public final class ObjectIdentifier
 			}
 			
 			if(storedObject == object) {
-				retVal = REGISTRY.get(reference);
+				retVal = ObjectIdentifier.REGISTRY.get(reference);
 				break;
 			}
 		}
 		
 		if(oldReferences != null) {
 			for(WeakReference<Object> reference : oldReferences) {
-				REGISTRY.remove(reference);
+				ObjectIdentifier.REGISTRY.remove(reference);
 			}
 		}
 		
 		if(retVal == null) {
-			retVal = BUILDER.getAndIncrement();
-			REGISTRY.put(new WeakReference<>(object), retVal);
+			retVal = ObjectIdentifier.BUILDER.getAndIncrement();
+			ObjectIdentifier.REGISTRY.put(new WeakReference<>(object), retVal);
 		}
 		
 		return retVal;

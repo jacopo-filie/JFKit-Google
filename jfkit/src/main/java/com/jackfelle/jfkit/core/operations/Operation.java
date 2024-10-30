@@ -208,7 +208,7 @@ public abstract class Operation
 	// region Methods - Execution
 	
 	public <T extends Operation> void addDependencies(@NonNull Collection<T> operations) {
-		if(operations.size() == 0) {
+		if(operations.isEmpty()) {
 			return;
 		}
 		
@@ -275,7 +275,7 @@ public abstract class Operation
 	}
 	
 	public <T extends Operation> void removeDependencies(@NonNull Collection<T> operations) {
-		if(operations.size() == 0) {
+		if(operations.isEmpty()) {
 			return;
 		}
 		
@@ -385,8 +385,8 @@ public abstract class Operation
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// region Constants
 		
-		public static final @NonNull QueuePriority[] SORTED_VALUES_ASC = new Operation.QueuePriority[] {VERY_LOW, LOW, NORMAL, HIGH, VERY_HIGH};
-		public static final @NonNull QueuePriority[] SORTED_VALUES_DESC = new Operation.QueuePriority[] {VERY_HIGH, HIGH, NORMAL, LOW, VERY_LOW};
+		public static final @NonNull QueuePriority[] SORTED_VALUES_ASC = new Operation.QueuePriority[] {QueuePriority.VERY_LOW, QueuePriority.LOW, QueuePriority.NORMAL, QueuePriority.HIGH, QueuePriority.VERY_HIGH};
+		public static final @NonNull QueuePriority[] SORTED_VALUES_DESC = new Operation.QueuePriority[] {QueuePriority.VERY_HIGH, QueuePriority.HIGH, QueuePriority.NORMAL, QueuePriority.LOW, QueuePriority.VERY_LOW};
 		
 		// endregion
 		////////////////////////////////////////////////////////////////////////////////////////////////
@@ -409,7 +409,7 @@ public abstract class Operation
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	// region Classes
 	
-	private static class DependencyObserver extends BaseObserver<Operation> implements Observer
+	protected static class DependencyObserver extends BaseObserver<Operation> implements Observer
 	{
 		public DependencyObserver(@NonNull Operation owner) {
 			super(owner);

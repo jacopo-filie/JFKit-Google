@@ -54,23 +54,23 @@ public class ConnectionMachine extends StateMachine
 	// region Properties (Accessors) - State
 	
 	public boolean isConnected() {
-		return (this.getCurrentState() == STATE_CONNECTED);
+		return (this.getCurrentState() == ConnectionMachine.STATE_CONNECTED);
 	}
 	
 	public boolean isDirty() {
-		return (this.getCurrentState() == STATE_DIRTY);
+		return (this.getCurrentState() == ConnectionMachine.STATE_DIRTY);
 	}
 	
 	public boolean isDisconnected() {
-		return (this.getCurrentState() == STATE_DISCONNECTED);
+		return (this.getCurrentState() == ConnectionMachine.STATE_DISCONNECTED);
 	}
 	
 	public boolean isLost() {
-		return (this.getCurrentState() == STATE_LOST);
+		return (this.getCurrentState() == ConnectionMachine.STATE_LOST);
 	}
 	
 	public boolean isReady() {
-		return (this.getCurrentState() == STATE_READY);
+		return (this.getCurrentState() == ConnectionMachine.STATE_READY);
 	}
 	
 	// endregion
@@ -78,25 +78,25 @@ public class ConnectionMachine extends StateMachine
 	// region Properties (Accessors) - Transitions
 	
 	public boolean isConnecting() {
-		return (this.getCurrentTransition() == TRANSITION_CONNECTING);
+		return (this.getCurrentTransition() == ConnectionMachine.TRANSITION_CONNECTING);
 	}
 	
 	public boolean isDisconnecting() {
 		int transition = this.getCurrentTransition();
-		return ((transition == TRANSITION_DISCONNECTING_FROM_CONNECTED) || (transition == TRANSITION_DISCONNECTING_FROM_LOST));
+		return ((transition == ConnectionMachine.TRANSITION_DISCONNECTING_FROM_CONNECTED) || (transition == ConnectionMachine.TRANSITION_DISCONNECTING_FROM_LOST));
 	}
 	
 	public boolean isLosingConnection() {
-		return (this.getCurrentTransition() == TRANSITION_LOSING_CONNECTION);
+		return (this.getCurrentTransition() == ConnectionMachine.TRANSITION_LOSING_CONNECTION);
 	}
 	
 	public boolean isReconnecting() {
-		return (this.getCurrentTransition() == TRANSITION_RECONNECTING);
+		return (this.getCurrentTransition() == ConnectionMachine.TRANSITION_RECONNECTING);
 	}
 	
 	public boolean isResetting() {
 		int transition = this.getCurrentTransition();
-		return ((transition == TRANSITION_RESETTING_FROM_DIRTY) || (transition == TRANSITION_RESETTING_FROM_DISCONNECTED));
+		return ((transition == ConnectionMachine.TRANSITION_RESETTING_FROM_DIRTY) || (transition == ConnectionMachine.TRANSITION_RESETTING_FROM_DISCONNECTED));
 	}
 	
 	// endregion
@@ -104,7 +104,7 @@ public class ConnectionMachine extends StateMachine
 	// region Memory management
 	
 	public ConnectionMachine(@NonNull Delegate delegate) {
-		super(STATE_READY, delegate);
+		super(ConnectionMachine.STATE_READY, delegate);
 	}
 	
 	// endregion
@@ -120,7 +120,7 @@ public class ConnectionMachine extends StateMachine
 	}
 	
 	public void connect(Object context, Blocks.SimpleCompletionBlock completion) {
-		this.performTransition(TRANSITION_CONNECTING, context, completion);
+		this.performTransition(ConnectionMachine.TRANSITION_CONNECTING, context, completion);
 	}
 	
 	public void disconnect() {
@@ -134,14 +134,14 @@ public class ConnectionMachine extends StateMachine
 	public void disconnect(Object context, Blocks.SimpleCompletionBlock completion) {
 		int transition;
 		switch(this.getCurrentState()) {
-			case STATE_CONNECTED:
-				transition = TRANSITION_DISCONNECTING_FROM_CONNECTED;
+			case ConnectionMachine.STATE_CONNECTED:
+				transition = ConnectionMachine.TRANSITION_DISCONNECTING_FROM_CONNECTED;
 				break;
-			case STATE_LOST:
-				transition = TRANSITION_DISCONNECTING_FROM_LOST;
+			case ConnectionMachine.STATE_LOST:
+				transition = ConnectionMachine.TRANSITION_DISCONNECTING_FROM_LOST;
 				break;
 			default:
-				transition = TRANSITION_NOT_AVAILABLE;
+				transition = StateMachine.TRANSITION_NOT_AVAILABLE;
 				break;
 		}
 		this.performTransition(transition, context, completion);
@@ -149,15 +149,15 @@ public class ConnectionMachine extends StateMachine
 	
 	@Override public int getFinalStateForFailedTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CONNECTING:
-			case TRANSITION_LOSING_CONNECTION:
-			case TRANSITION_RECONNECTING:
-				return STATE_LOST;
-			case TRANSITION_DISCONNECTING_FROM_CONNECTED:
-			case TRANSITION_DISCONNECTING_FROM_LOST:
-			case TRANSITION_RESETTING_FROM_DIRTY:
-			case TRANSITION_RESETTING_FROM_DISCONNECTED:
-				return STATE_DIRTY;
+			case ConnectionMachine.TRANSITION_CONNECTING:
+			case ConnectionMachine.TRANSITION_LOSING_CONNECTION:
+			case ConnectionMachine.TRANSITION_RECONNECTING:
+				return ConnectionMachine.STATE_LOST;
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_CONNECTED:
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_LOST:
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DIRTY:
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DISCONNECTED:
+				return ConnectionMachine.STATE_DIRTY;
 			default:
 				return super.getFinalStateForFailedTransition(transition);
 		}
@@ -165,17 +165,17 @@ public class ConnectionMachine extends StateMachine
 	
 	@Override public int getFinalStateForSucceededTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CONNECTING:
-			case TRANSITION_RECONNECTING:
-				return STATE_CONNECTED;
-			case TRANSITION_DISCONNECTING_FROM_CONNECTED:
-			case TRANSITION_DISCONNECTING_FROM_LOST:
-				return STATE_DISCONNECTED;
-			case TRANSITION_LOSING_CONNECTION:
-				return STATE_LOST;
-			case TRANSITION_RESETTING_FROM_DIRTY:
-			case TRANSITION_RESETTING_FROM_DISCONNECTED:
-				return STATE_READY;
+			case ConnectionMachine.TRANSITION_CONNECTING:
+			case ConnectionMachine.TRANSITION_RECONNECTING:
+				return ConnectionMachine.STATE_CONNECTED;
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_CONNECTED:
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_LOST:
+				return ConnectionMachine.STATE_DISCONNECTED;
+			case ConnectionMachine.TRANSITION_LOSING_CONNECTION:
+				return ConnectionMachine.STATE_LOST;
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DIRTY:
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DISCONNECTED:
+				return ConnectionMachine.STATE_READY;
 			default:
 				return super.getFinalStateForSucceededTransition(transition);
 		}
@@ -183,18 +183,18 @@ public class ConnectionMachine extends StateMachine
 	
 	@Override public int getInitialStateForTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CONNECTING:
-				return STATE_READY;
-			case TRANSITION_DISCONNECTING_FROM_CONNECTED:
-			case TRANSITION_LOSING_CONNECTION:
-				return STATE_CONNECTED;
-			case TRANSITION_DISCONNECTING_FROM_LOST:
-			case TRANSITION_RECONNECTING:
-				return STATE_LOST;
-			case TRANSITION_RESETTING_FROM_DIRTY:
-				return STATE_DIRTY;
-			case TRANSITION_RESETTING_FROM_DISCONNECTED:
-				return STATE_DISCONNECTED;
+			case ConnectionMachine.TRANSITION_CONNECTING:
+				return ConnectionMachine.STATE_READY;
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_CONNECTED:
+			case ConnectionMachine.TRANSITION_LOSING_CONNECTION:
+				return ConnectionMachine.STATE_CONNECTED;
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_LOST:
+			case ConnectionMachine.TRANSITION_RECONNECTING:
+				return ConnectionMachine.STATE_LOST;
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DIRTY:
+				return ConnectionMachine.STATE_DIRTY;
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DISCONNECTED:
+				return ConnectionMachine.STATE_DISCONNECTED;
 			default:
 				return super.getInitialStateForTransition(transition);
 		}
@@ -209,7 +209,7 @@ public class ConnectionMachine extends StateMachine
 	}
 	
 	public void loseConnection(Object context, Blocks.SimpleCompletionBlock completion) {
-		this.performTransition(TRANSITION_LOSING_CONNECTION, context, completion);
+		this.performTransition(ConnectionMachine.TRANSITION_LOSING_CONNECTION, context, completion);
 	}
 	
 	public void reconnect() {
@@ -221,7 +221,7 @@ public class ConnectionMachine extends StateMachine
 	}
 	
 	public void reconnect(Object context, Blocks.SimpleCompletionBlock completion) {
-		this.performTransition(TRANSITION_RECONNECTING, context, completion);
+		this.performTransition(ConnectionMachine.TRANSITION_RECONNECTING, context, completion);
 	}
 	
 	public void reset() {
@@ -235,14 +235,14 @@ public class ConnectionMachine extends StateMachine
 	public void reset(Object context, Blocks.SimpleCompletionBlock completion) {
 		int transition;
 		switch(this.getCurrentState()) {
-			case STATE_DIRTY:
-				transition = TRANSITION_RESETTING_FROM_DIRTY;
+			case ConnectionMachine.STATE_DIRTY:
+				transition = ConnectionMachine.TRANSITION_RESETTING_FROM_DIRTY;
 				break;
-			case STATE_DISCONNECTED:
-				transition = TRANSITION_RESETTING_FROM_DISCONNECTED;
+			case ConnectionMachine.STATE_DISCONNECTED:
+				transition = ConnectionMachine.TRANSITION_RESETTING_FROM_DISCONNECTED;
 				break;
 			default:
-				transition = TRANSITION_NOT_AVAILABLE;
+				transition = StateMachine.TRANSITION_NOT_AVAILABLE;
 				break;
 		}
 		this.performTransition(transition, context, completion);
@@ -254,15 +254,15 @@ public class ConnectionMachine extends StateMachine
 	
 	@Override public String getDebugStringForState(int state) {
 		switch(state) {
-			case STATE_CONNECTED:
+			case ConnectionMachine.STATE_CONNECTED:
 				return "Connected";
-			case STATE_DIRTY:
+			case ConnectionMachine.STATE_DIRTY:
 				return "Dirty";
-			case STATE_DISCONNECTED:
+			case ConnectionMachine.STATE_DISCONNECTED:
 				return "Disconnected";
-			case STATE_LOST:
+			case ConnectionMachine.STATE_LOST:
 				return "Lost";
-			case STATE_READY:
+			case ConnectionMachine.STATE_READY:
 				return "Ready";
 			default:
 				return super.getDebugStringForState(state);
@@ -271,19 +271,19 @@ public class ConnectionMachine extends StateMachine
 	
 	@Override public String getDebugStringForTransition(int transition) {
 		switch(transition) {
-			case TRANSITION_CONNECTING:
+			case ConnectionMachine.TRANSITION_CONNECTING:
 				return "Connecting";
-			case TRANSITION_DISCONNECTING_FROM_CONNECTED:
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_CONNECTED:
 				return "DisconnectingFromConnected";
-			case TRANSITION_DISCONNECTING_FROM_LOST:
+			case ConnectionMachine.TRANSITION_DISCONNECTING_FROM_LOST:
 				return "DisconnectingFromLost";
-			case TRANSITION_LOSING_CONNECTION:
+			case ConnectionMachine.TRANSITION_LOSING_CONNECTION:
 				return "LosingConnection";
-			case TRANSITION_RECONNECTING:
+			case ConnectionMachine.TRANSITION_RECONNECTING:
 				return "Reconnecting";
-			case TRANSITION_RESETTING_FROM_DIRTY:
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DIRTY:
 				return "ResettingFromDirty";
-			case TRANSITION_RESETTING_FROM_DISCONNECTED:
+			case ConnectionMachine.TRANSITION_RESETTING_FROM_DISCONNECTED:
 				return "ResettingFromDisconnected";
 			default:
 				return super.getDebugStringForTransition(transition);

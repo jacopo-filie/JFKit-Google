@@ -76,11 +76,9 @@ public abstract class Geometry
 				return true;
 			}
 			
-			if(!(obj instanceof EdgeInsets)) {
+			if(!(obj instanceof EdgeInsets object)) {
 				return false;
 			}
-			
-			EdgeInsets object = (EdgeInsets)obj;
 			
 			if(Float.compare(this.bottom, object.bottom) != 0) {
 				return false;
@@ -184,11 +182,9 @@ public abstract class Geometry
 				return true;
 			}
 			
-			if(!(obj instanceof Point)) {
+			if(!(obj instanceof Point object)) {
 				return false;
 			}
-			
-			Point object = (Point)obj;
 			
 			if(Float.compare(this.x, object.x) != 0) {
 				return false;
@@ -237,11 +233,9 @@ public abstract class Geometry
 				return true;
 			}
 			
-			if(!super.equals(obj) || !(obj instanceof Point3D)) {
+			if(!super.equals(obj) || !(obj instanceof Point3D object)) {
 				return false;
 			}
-			
-			Point3D object = (Point3D)obj;
 			
 			return (Float.compare(this.z, object.z) == 0);
 		}
@@ -382,11 +376,9 @@ public abstract class Geometry
 				return true;
 			}
 			
-			if(!(obj instanceof Rect)) {
+			if(!(obj instanceof Rect object)) {
 				return false;
 			}
-			
-			Rect object = (Rect)obj;
 			
 			if(!Utilities.areObjectsEqual(this.origin, object.origin)) {
 				return false;
@@ -524,11 +516,9 @@ public abstract class Geometry
 				return true;
 			}
 			
-			if(!(obj instanceof Size)) {
+			if(!(obj instanceof Size object)) {
 				return false;
 			}
-			
-			Size object = (Size)obj;
 			
 			if(Float.compare(this.width, object.width) != 0) {
 				return false;
@@ -590,5 +580,5 @@ public abstract class Geometry
 	public static final @NonNull Point POINT_ZERO = new Point(0, 0);
 	public static final @NonNull Size SIZE_ZERO = new Size(0, 0);
 	
-	public static final @NonNull Rect RECT_ZERO = new Rect(POINT_ZERO, SIZE_ZERO);
+	public static final @NonNull Rect RECT_ZERO = new Rect(Geometry.POINT_ZERO, Geometry.SIZE_ZERO);
 }

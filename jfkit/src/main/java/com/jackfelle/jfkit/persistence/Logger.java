@@ -190,43 +190,43 @@ public class Logger
 			
 			List<String> tagStrings = new ArrayList<>(size);
 			
-			if(tags.contains(ATTENTION)) {
+			if(tags.contains(Tags.ATTENTION)) {
 				tagStrings.add("#Attention");
 			}
-			if(tags.contains(CLUE)) {
+			if(tags.contains(Tags.CLUE)) {
 				tagStrings.add("#Clue");
 			}
-			if(tags.contains(COMMENT)) {
+			if(tags.contains(Tags.COMMENT)) {
 				tagStrings.add("#Comment");
 			}
-			if(tags.contains(CRITICAL)) {
+			if(tags.contains(Tags.CRITICAL)) {
 				tagStrings.add("#Critical");
 			}
-			if(tags.contains(DEVELOPER)) {
+			if(tags.contains(Tags.DEVELOPER)) {
 				tagStrings.add("#Developer");
 			}
-			if(tags.contains(ERROR)) {
+			if(tags.contains(Tags.ERROR)) {
 				tagStrings.add("#Error");
 			}
-			if(tags.contains(FILE_SYSTEM)) {
+			if(tags.contains(Tags.FILE_SYSTEM)) {
 				tagStrings.add("#FileSystem");
 			}
-			if(tags.contains(HARDWARE)) {
+			if(tags.contains(Tags.HARDWARE)) {
 				tagStrings.add("#Hardware");
 			}
-			if(tags.contains(MARKER)) {
+			if(tags.contains(Tags.MARKER)) {
 				tagStrings.add("#Marker");
 			}
-			if(tags.contains(NETWORK)) {
+			if(tags.contains(Tags.NETWORK)) {
 				tagStrings.add("#Network");
 			}
-			if(tags.contains(SECURITY)) {
+			if(tags.contains(Tags.SECURITY)) {
 				tagStrings.add("#Security");
 			}
-			if(tags.contains(SYSTEM)) {
+			if(tags.contains(Tags.SYSTEM)) {
 				tagStrings.add("#System");
 			}
-			if(tags.contains(USER)) {
+			if(tags.contains(Tags.USER)) {
 				tagStrings.add("#User");
 			}
 			
@@ -320,7 +320,7 @@ public class Logger
 	public @NonNull String getFormat() {
 		synchronized(this) {
 			if(this.format == null) {
-				this.format = String.format(Locale.US, "%s %s [%s:%s] %s", FORMAT_DATE, FORMAT_TIME, FORMAT_PROCESS_ID, FORMAT_THREAD_ID, FORMAT_MESSAGE);
+				this.format = String.format(Locale.US, "%s %s [%s:%s] %s", Logger.FORMAT_DATE, Logger.FORMAT_TIME, Logger.FORMAT_PROCESS_ID, Logger.FORMAT_THREAD_ID, Logger.FORMAT_MESSAGE);
 			}
 			return this.format;
 		}
@@ -348,7 +348,7 @@ public class Logger
 	private @NonNull List<String> getRequestedFormatValues() {
 		synchronized(this) {
 			if(this.requestedFormatValues == null) {
-				String[] possibleValues = new String[] {FORMAT_DATE, FORMAT_MESSAGE, FORMAT_PROCESS_ID, FORMAT_SEVERITY, FORMAT_THREAD_ID, FORMAT_TIME};
+				String[] possibleValues = new String[] {Logger.FORMAT_DATE, Logger.FORMAT_MESSAGE, Logger.FORMAT_PROCESS_ID, Logger.FORMAT_SEVERITY, Logger.FORMAT_THREAD_ID, Logger.FORMAT_TIME};
 				
 				String format = this.getFormat();
 				
@@ -670,33 +670,33 @@ public class Logger
 		Map<String, String> values = new HashMap<>(requestedFormatValues.size());
 		
 		// Converts the severity level to string.
-		if(requestedFormatValues.contains(FORMAT_SEVERITY)) {
-			values.put(FORMAT_SEVERITY, Severity.stringFromSeverity(severity));
+		if(requestedFormatValues.contains(Logger.FORMAT_SEVERITY)) {
+			values.put(Logger.FORMAT_SEVERITY, Severity.stringFromSeverity(severity));
 		}
 		
 		// Gets the current process ID.
-		if(requestedFormatValues.contains(FORMAT_PROCESS_ID)) {
-			values.put(FORMAT_PROCESS_ID, Integer.toString(android.os.Process.myPid()));
+		if(requestedFormatValues.contains(Logger.FORMAT_PROCESS_ID)) {
+			values.put(Logger.FORMAT_PROCESS_ID, Integer.toString(android.os.Process.myPid()));
 		}
 		
 		// Gets the current thread ID.
-		if(requestedFormatValues.contains(FORMAT_THREAD_ID)) {
-			values.put(FORMAT_THREAD_ID, Integer.toString(android.os.Process.myTid()));
+		if(requestedFormatValues.contains(Logger.FORMAT_THREAD_ID)) {
+			values.put(Logger.FORMAT_THREAD_ID, Integer.toString(android.os.Process.myTid()));
 		}
 		
 		// Gets the current date.
-		if(requestedFormatValues.contains(FORMAT_DATE)) {
-			values.put(FORMAT_DATE, this.dateStringFromDate(currentDate));
+		if(requestedFormatValues.contains(Logger.FORMAT_DATE)) {
+			values.put(Logger.FORMAT_DATE, this.dateStringFromDate(currentDate));
 		}
 		
 		// Gets the current time.
-		if(requestedFormatValues.contains(FORMAT_TIME)) {
-			values.put(FORMAT_TIME, this.timeStringFromDate(currentDate));
+		if(requestedFormatValues.contains(Logger.FORMAT_TIME)) {
+			values.put(Logger.FORMAT_TIME, this.timeStringFromDate(currentDate));
 		}
 		
 		// Gets the message.
-		if(requestedFormatValues.contains(FORMAT_MESSAGE)) {
-			values.put(FORMAT_MESSAGE, message);
+		if(requestedFormatValues.contains(Logger.FORMAT_MESSAGE)) {
+			values.put(Logger.FORMAT_MESSAGE, message);
 		}
 		
 		// Prepares the log string.

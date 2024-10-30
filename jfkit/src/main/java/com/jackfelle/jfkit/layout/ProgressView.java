@@ -25,7 +25,6 @@
 package com.jackfelle.jfkit.layout;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -98,7 +97,7 @@ public class ProgressView extends RelativeLayout
 		
 		ProgressBar spinnerView = this.spinnerView;
 		if(spinnerView != null) {
-			spinnerView.setVisibility(isHidden ? GONE : VISIBLE);
+			spinnerView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
 		}
 	}
 	
@@ -183,7 +182,7 @@ public class ProgressView extends RelativeLayout
 		ProgressView.initialize(context, this);
 	}
 	
-	@SuppressWarnings("ThisEscapedInObjectConstruction") @TargetApi(21) public ProgressView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+	@SuppressWarnings("ThisEscapedInObjectConstruction") public ProgressView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 		super(context, attrs, defStyleAttr, defStyleRes);
 		ProgressView.initialize(context, this);
 	}
@@ -202,7 +201,7 @@ public class ProgressView extends RelativeLayout
 		textLabel.setText(text);
 		textLabel.setTextColor(Utilities.replaceIfNull(this.getTextColor(), Color.WHITE));
 		textLabel.setTypeface(Utilities.replaceIfNull(this.getTextFont(), Typeface.DEFAULT));
-		textLabel.setVisibility(Strings.isNullOrEmptyString(text) ? GONE : VISIBLE);
+		textLabel.setVisibility(Strings.isNullOrEmptyString(text) ? View.GONE : View.VISIBLE);
 	}
 	
 	// endregion

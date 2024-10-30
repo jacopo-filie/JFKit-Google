@@ -63,19 +63,19 @@ public abstract class ErrorFactory
 	
 	public static ErrorFactory getSharedFactory(@NonNull String key) {
 		synchronized(ErrorFactory.class) {
-			return SHARED_FACTORIES.get(key);
+			return ErrorFactory.SHARED_FACTORIES.get(key);
 		}
 	}
 	
 	public static void registerSharedFactory(@NonNull ErrorFactory factory, @NonNull String key) {
 		synchronized(ErrorFactory.class) {
-			SHARED_FACTORIES.put(key, factory);
+			ErrorFactory.SHARED_FACTORIES.put(key, factory);
 		}
 	}
 	
 	public static void unregisterSharedFactory(@NonNull String key) {
 		synchronized(ErrorFactory.class) {
-			SHARED_FACTORIES.remove(key);
+			ErrorFactory.SHARED_FACTORIES.remove(key);
 		}
 	}
 	

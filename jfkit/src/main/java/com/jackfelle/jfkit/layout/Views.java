@@ -26,7 +26,6 @@ package com.jackfelle.jfkit.layout;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,25 +42,8 @@ public abstract class Views
 	// region Methods - Utilities
 	
 	public static void bringViewToFront(@Nullable View view) {
-		if(view == null) {
-			return;
-		}
-		
-		view.bringToFront();
-		
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			return;
-		}
-		
-		ViewParent parent = view.getParent();
-		if(parent == null) {
-			return;
-		}
-		
-		parent.requestLayout();
-		
-		if(parent instanceof View) {
-			((View)parent).invalidate();
+		if(view != null) {
+			view.bringToFront();
 		}
 	}
 	
@@ -92,18 +74,7 @@ public abstract class Views
 	}
 	
 	public static void copyViewPaddings(@NonNull View source, @NonNull View destination) {
-		int left;
-		int right;
-		
-		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			left = source.getPaddingLeft();
-			right = source.getPaddingRight();
-		} else {
-			left = source.getPaddingStart();
-			right = source.getPaddingEnd();
-		}
-		
-		destination.setPadding(left, source.getPaddingTop(), right, source.getPaddingBottom());
+		destination.setPadding(source.getPaddingStart(), source.getPaddingTop(), source.getPaddingEnd(), source.getPaddingBottom());
 	}
 	
 	public static float getPixelsFromPoints(@NonNull Context context, float points) {
