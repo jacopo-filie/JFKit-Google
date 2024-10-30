@@ -1,4 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+	ext {
+		buildVersion = 1
+		marketingVersion = '0.1'
+		releaseVersion = marketingVersion + "(" + buildVersion + ")"
+		
+		compileSdkVersion = 34
+		minSdkVersion = 21
+		targetSdkVersion = 34
+		
+		javaVersion = JavaVersion.VERSION_17
+	}
+}
+
 plugins {
 	id 'com.android.application' version '8.1.4' apply false
 	id 'com.android.library' version '8.1.4' apply false

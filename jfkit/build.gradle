@@ -6,9 +6,9 @@ android {
 	namespace 'com.jackfelle.jfkit'
 	
 	defaultConfig {
-		compileSdk 33
-		minSdkVersion 21
-		targetSdkVersion 33
+		compileSdk rootProject.ext.compileSdkVersion
+		minSdk rootProject.ext.minSdkVersion
+		targetSdk rootProject.ext.targetSdkVersion
 		
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		consumerProguardFiles "consumer-rules.pro"
@@ -22,12 +22,12 @@ android {
 	}
 	
 	compileOptions {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
+		sourceCompatibility rootProject.ext.javaVersion
+		targetCompatibility rootProject.ext.javaVersion
 	}
 }
 
 dependencies {
-	implementation 'androidx.appcompat:appcompat:1.6.1'
-	implementation 'com.google.android.material:material:1.8.0'
+	implementation 'androidx.appcompat:appcompat:1.7.0'
+	implementation 'com.google.android.material:material:1.12.0'
 }
